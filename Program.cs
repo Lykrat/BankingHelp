@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 namespace BankingHelp
@@ -17,7 +18,7 @@ namespace BankingHelp
         {
             for(int i = 0; i < 3; i++)
             { 
-                Console.WriteLine("Användarnummer: ");
+                Console.WriteLine("\nAnvändarnummer: ");
                 int AnvändarNummer = (int.Parse(Console.ReadLine()));
                 Console.WriteLine("Pinnummer: ");
                 int AnvändarPin=(int.Parse(Console.ReadLine()));
@@ -34,28 +35,29 @@ namespace BankingHelp
         }
         static void MainMenu(int Attempt, int[,] User, object[,] ViktigaKonton)
         {
-            Console.WriteLine("1. Se dina konton och saldo");
+            Console.WriteLine("\n1. Se dina konton och saldo");
             Console.WriteLine("2. Överföring mellan konton");
             Console.WriteLine("3. Ta ut pengar");
-            Console.WriteLine("4 Logga ut");
+            Console.WriteLine("4. Logga ut");
             int Choice = int.Parse(Console.ReadLine());
+            Console.Write("\n");
             switch (Choice)
             {
                 case 1:
-                    CheckKonto(Attempt, ViktigaKonton);
+                    CheckKonto(Attempt, ViktigaKonton,User);
                     break;
                 case 2:
-                    TransactionKonto(Attempt, ViktigaKonton);
+                    TransactionKonto(Attempt, ViktigaKonton,User);
                     break;
                 case 3:
-                    TakeOutKonto(Attempt, ViktigaKonton);
+                    TakeOutKonto(Attempt, ViktigaKonton,User);
                     break;
                 case 4:
                     Loggin(User,ViktigaKonton);
                     break;
             }
         }
-        static void CheckKonto(int Attempt, object[,] ViktigaKonton)
+        static void CheckKonto(int Attempt, object[,] ViktigaKonton, int[,] User)
         {
             for (int i=0; i< 10; i++)
             {
@@ -64,9 +66,17 @@ namespace BankingHelp
                     Console.WriteLine("Ditt {0} har {1} sek", ViktigaKonton[i, 1], ViktigaKonton[i,2]);
                 }
             }
-            Console.WriteLine("\nKlicka på enter för att fortsätta till meny");
+            Console.WriteLine("\ntryck på ENTER för meny");
+            ConsoleKeyInfo x;
+            do
+            {
+                x = Console.ReadKey();
+            }
+            while (x.Key != ConsoleKey.Enter);
+            Console.Write("\n");
+            MainMenu(Attempt, User, ViktigaKonton);
         }
-        static void TransactionKonto(int Attempt, object[,] ViktigaKonton)
+        static void TransactionKonto(int Attempt, object[,] ViktigaKonton, int[,] User)
         {
             int NumberKonto=0;
             for (int i = 0; i < 10; i++)
@@ -88,7 +98,7 @@ namespace BankingHelp
             {
                 if (Attempt == Convert.ToInt32(ViktigaKonton[i, 0]) && Konto1 == Convert.ToInt32(ViktigaKonton[i, 3]))
                 {
-                    ViktigaKonton[i, 2] = (Convert.ToDouble(ViktigaKonton[i, 2]) - Summa);
+                    ViktigaKonton[i, 2] = Convert.ToDouble(ViktigaKonton[i, 2]) - Summa;
                     Console.WriteLine("Nya värdet är nu {0} sek i {1}", ViktigaKonton[i, 2], ViktigaKonton[i,1]);
                     break;
                 }
@@ -97,13 +107,22 @@ namespace BankingHelp
             {
                 if (Attempt == Convert.ToInt32(ViktigaKonton[i, 0]) && Konto2 == Convert.ToInt32(ViktigaKonton[i, 3]))
                 {
-                    ViktigaKonton[i, 2] = (Convert.ToDouble(ViktigaKonton[i, 2]) + Summa);
+                    ViktigaKonton[i, 2] = Convert.ToDouble(ViktigaKonton[i, 2]) + Summa;
                     Console.WriteLine("Nya värdet är nu {0} sek i {1}", ViktigaKonton[i, 2], ViktigaKonton[i, 1]);
                     break;
                 }
             }
+            Console.WriteLine("\ntryck på ENTER för meny");
+            ConsoleKeyInfo x;
+            do
+            {
+                x = Console.ReadKey();
+            }
+            while (x.Key != ConsoleKey.Enter);
+            Console.Write("\n");
+            MainMenu(Attempt, User, ViktigaKonton);
         }
-        static void TakeOutKonto(int Attempt,object[,] ViktigaKonton)
+        static void TakeOutKonto(int Attempt,object[,] ViktigaKonton, int[,] User)
         {
             int NumberKonto = 0;
             for (int i = 0; i < 10; i++)
@@ -114,7 +133,35 @@ namespace BankingHelp
                     Console.WriteLine("\n{0}. {1} - {2} sek", NumberKonto, ViktigaKonton[i, 1], ViktigaKonton[i, 2]);
                 }
             }
-            Console.WriteLine("Vilket Konto vill du ta ut pengar ifrån");
+            Console.WriteLine("\nVilket Konto vill du ta ut pengar ifrån?");
+            int Konto1 = int.Parse(Console.ReadLine());
+            Console.WriteLine("\nHur mycket pengar vill du ta ut?");
+            double Summa=double.Parse(Console.ReadLine());
+            Console.WriteLine("\nPinnummer: ");
+            int Pinnummer=int.Parse(Console.ReadLine());
+
+            if (Pinnummer == Attempt)
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    if (Attempt == Convert.ToInt32(ViktigaKonton[i, 0]) && Konto1 == Convert.ToInt32(ViktigaKonton[i, 3]))
+                    {
+                        ViktigaKonton[i, 2] = Convert.ToDouble(ViktigaKonton[i, 2]) - Summa;
+                        Console.WriteLine("Nya värdet är nu {0} sek i {1}", ViktigaKonton[i, 2], ViktigaKonton[i, 1]);
+                        break;
+                    }
+                }
+            }
+
+            Console.WriteLine("\ntryck på ENTER för meny");
+            ConsoleKeyInfo x;
+            do
+            {
+                x = Console.ReadKey();
+            }
+            while (x.Key != ConsoleKey.Enter);
+            Console.Write("\n");
+            MainMenu(Attempt, User, ViktigaKonton);
         }
     }
 }
