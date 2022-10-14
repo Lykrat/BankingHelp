@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace BankingHelp
+    //Emil Treptow - SUT22
 {
     internal class Program
     {
