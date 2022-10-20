@@ -206,7 +206,7 @@ namespace BankingHelp
                         {
                             //Subracts the value from the bank account the user has specified
                             ViktigaKonton[i, 1] = ViktigaKonton[i, 1] - Summa;
-                            Console.WriteLine("Nya värdet är nu {0} sek i {1}", ViktigaKonton[i, 2], ViktigaKonton[i, 1]);
+                            Console.WriteLine("Nya värdet är nu {0} sek i {1}", ViktigaKonton[i, 1], KontoTyp[Convert.ToInt32(ViktigaKonton[i, 2])]);
                             break;
                         }
                         else
