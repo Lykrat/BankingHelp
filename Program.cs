@@ -10,14 +10,14 @@ namespace BankingHelp
         {
             //Creating all the diffrent user accounts and bank accounts
             int[,] User = new int[5, 2] { { 1234, 123 }, { 1111, 111 }, { 2222, 222 }, { 3333, 333 }, { 4444, 444 } };
-            double[,] ViktigaKonto = new double[10, 3] { { 123,30.35,1 }, { 123,10000.00,2 },{ 111,100000.90,1 },{ 111,3000.00,2 },
-                { 222,63.77,1 },{ 222,1000000.00,2 },{ 333,59000.23,1 },{ 333,7000.00,2 },{ 444,10000.64,1 },{ 444,500.00,2 } };
+            decimal[,] ViktigaKonto = new decimal[10, 3] { { 123,30.35m,1 }, { 123,10000.00m,2 },{ 111,100000.90m,1 },{ 111,3000.00m,2 },
+                { 222,63.77m,1 },{ 222,1000000.00m,2 },{ 333,59000.23m,1 },{ 333,7000.00m,2 },{ 444,10000.64m,1 },{ 444,500.00m,2 } };
             string[] KontoTyp = { "Konto", "Lönekonto", "Sparkonto" };
             Console.WriteLine("Välkommen till bankprogrammet\n");
             //Starts the Loggin function
             Loggin(User,ViktigaKonto,KontoTyp);
         }
-        static void Loggin(int[,] User, double[,] ViktigaKonton, string[] KontoTyp)
+        static void Loggin(int[,] User, decimal[,] ViktigaKonton, string[] KontoTyp)
         {
             //If not done in 3 attempts the program stops
             for(int i = 0; i < 3; i++)
@@ -40,7 +40,7 @@ namespace BankingHelp
                 }
             }
         }
-        static void MainMenu(int Attempt, int[,] User, double[,] ViktigaKonton, string[] KontoTyp)
+        static void MainMenu(int Attempt, int[,] User, decimal[,] ViktigaKonton, string[] KontoTyp)
         {
             //Here we have a lot of values send over to send them to diffrent functions later
             Console.WriteLine("1. Se dina konton och saldo");
@@ -88,7 +88,7 @@ namespace BankingHelp
                 }
             }
         }
-        static void CheckKonto(int Attempt, double[,] ViktigaKonton, int[,] User, string[] KontoTyp)
+        static void CheckKonto(int Attempt, decimal[,] ViktigaKonton, int[,] User, string[] KontoTyp)
         {
             for (int i=0; i< 10; i++)
                 //searches all the bank accounts after that specific user
@@ -110,7 +110,7 @@ namespace BankingHelp
             Console.Write("\n");
             MainMenu(Attempt, User, ViktigaKonton, KontoTyp);
         }
-        static void TransactionKonto(int Attempt, double[,] ViktigaKonton, int[,] User, string[] KontoTyp)
+        static void TransactionKonto(int Attempt, decimal[,] ViktigaKonton, int[,] User, string[] KontoTyp)
         {
             int NumberKonto=0;
             for (int i = 0; i < 10; i++)
@@ -126,7 +126,7 @@ namespace BankingHelp
             Console.WriteLine("\nVilket Konto ska pengar flyttas till?");
             int Konto2=int.Parse(Console.ReadLine());
             Console.WriteLine("\nHur stor summa ska flyttas");
-            double Summa=double.Parse(Console.ReadLine());
+            decimal Summa=decimal.Parse(Console.ReadLine());
             int k = 0;
 
             for(int i = 0; i < 10; i++)
@@ -155,7 +155,7 @@ namespace BankingHelp
                     if (k == 0)
                     {
                         ViktigaKonton[i, 1] = ViktigaKonton[i, 1] + Summa;
-                        Console.WriteLine("Nya värdet är nu {0} sek i {1}", ViktigaKonton[i, 1], KontoTyp[Convert.ToInt32(ViktigaKonton[i, 2])]);
+                        Console.WriteLine("Nya värdet är nu {0:0.00} sek i {1}", ViktigaKonton[i, 1], KontoTyp[Convert.ToInt32(ViktigaKonton[i, 2])]);
                         break;
                     }
                     else
@@ -177,7 +177,7 @@ namespace BankingHelp
             //Sends back to main menu
             MainMenu(Attempt, User, ViktigaKonton, KontoTyp);
         }
-        static void TakeOutKonto(int Attempt,double[,] ViktigaKonton, int[,] User, string[] KontoTyp)
+        static void TakeOutKonto(int Attempt,decimal[,] ViktigaKonton, int[,] User, string[] KontoTyp)
         {
             int NumberKonto = 0;
             for (int i = 0; i < 10; i++)
@@ -192,7 +192,7 @@ namespace BankingHelp
             Console.WriteLine("\nVilket Konto vill du ta ut pengar ifrån?");
             int Konto1 = int.Parse(Console.ReadLine());
             Console.WriteLine("\nHur mycket pengar vill du ta ut?");
-            double Summa=double.Parse(Console.ReadLine());
+            decimal Summa=decimal.Parse(Console.ReadLine());
             Console.WriteLine("\nPinnummer: ");
             int Pinnummer=int.Parse(Console.ReadLine());
 
